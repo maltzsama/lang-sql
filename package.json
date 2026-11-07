@@ -4,7 +4,8 @@
   "description": "SQL language support for the CodeMirror code editor",
   "scripts": {
     "test": "cm-runtests",
-    "prepare": "cm-buildhelper src/sql.ts"
+    "prepare": "cm-buildhelper src/sql.ts",
+    "generate-dialects": "node scripts/generate-dialects.mjs"
   },
   "keywords": [
     "editor",
@@ -27,14 +28,15 @@
   "license": "MIT",
   "dependencies": {
     "@codemirror/autocomplete": "^6.0.0",
-    "@lezer/common": "^1.2.0",
-    "@lezer/highlight": "^1.0.0",
     "@codemirror/language": "^6.0.0",
     "@codemirror/state": "^6.0.0",
+    "@lezer/common": "^1.2.0",
+    "@lezer/highlight": "^1.0.0",
     "@lezer/lr": "^1.0.0"
   },
   "devDependencies": {
-    "@codemirror/buildhelper": "^1.0.0"
+    "@codemirror/buildhelper": "^1.0.0",
+    "sqlingo": "^0.12.4"
   },
   "repository": {
     "type": "git",
