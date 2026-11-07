@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@codemirror/buildhelper": "^1.0.0",
-    "sqlingo": "^0.12.4"
+    "sqlingo": "0.12.4"
   },
   "repository": {
     "type": "git",

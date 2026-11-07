@@ -35,6 +35,14 @@ const view = new EditorView({
 Use `sql({dialect: PostgreSQL})` or similar to select a specific SQL
 dialect.
 
+## Dialect data
+
+The keyword, type, and builtin lists for the bundled dialects are
+generated from [sqlingo](https://github.com/huydo862003/sqlingo), a
+JavaScript port of SQLGlot. To change them, edit
+`scripts/generate-dialects.mjs` and run `npm run generate-dialects`,
+then commit the updated `src/dialects.ts`.
+
 ## API Reference
 
 <dl>
