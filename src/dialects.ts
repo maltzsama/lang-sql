@@ -417,7 +417,6 @@ export const fabricSpec: SQLDialectSpec = {
     "eomonth get_bit getdate hashbytes json_query json_value newid parsename predict replicate " +
     "schema_name square suser_name suser_sname sysdatetime sysdatetimeoffset transform ",
   identifierQuotes: "[\"",
-  doubleQuotedStrings: true,
   specialVar: "@"
 }
 
@@ -968,7 +967,6 @@ export const tsqlSpec: SQLDialectSpec = {
     "eomonth get_bit getdate hashbytes json_query json_value newid parsename predict replicate " +
     "schema_name square suser_name suser_sname sysdatetime sysdatetimeoffset transform ",
   identifierQuotes: "[\"",
-  doubleQuotedStrings: true,
   specialVar: "@",
   caseInsensitiveIdentifiers: true
 }

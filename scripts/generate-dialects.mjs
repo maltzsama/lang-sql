@@ -123,7 +123,9 @@ function flagsFor(cls) {
 
   return {
     identifierQuotes: identifiers.join("") || undefined,
-    doubleQuotedStrings: quotes.some(q => openQuote(q) == '"') || undefined,
+    // sqlingo tries identifier quotes before string quotes, so `"` only acts
+    // as a string delimiter when it is not also an identifier quote.
+    doubleQuotedStrings: quotes.some(q => openQuote(q) == '"') && !identifiers.includes('"') || undefined,
     hashComments: comments.some(c => c == "#") || undefined,
     slashComments: comments.some(c => c == "//") || undefined,
     backslashEscapes: (tok.STRING_ESCAPES ?? []).includes("\\") || undefined,
