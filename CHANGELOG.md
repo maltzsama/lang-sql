@@ -17,6 +17,14 @@ This fork is published as `@maltzsama/lang-sql`. Import it with
 `import {sql} from "@maltzsama/lang-sql"`. See `NOTICE` for third-party
 attributions.
 
+## [6.12.1](https://github.com/maltzsama/lang-sql/compare/v6.12.0...v6.12.1) (2026-11-07)
+
+
+### Refactors
+
+* **generate-dialects:** dedupe cross-dialect keywords and types ([5f7f237](https://github.com/maltzsama/lang-sql/commit/5f7f2379bb91fab89ae914c8d2daeeea011f72c3))
+* **generate-dialects:** dedupe cross-dialect keywords and types ([#13](https://github.com/maltzsama/lang-sql/issues/13)) ([47c73c6](https://github.com/maltzsama/lang-sql/commit/47c73c635a2bc71e0a3b93e4a7092604842f16a6))
+
 ## [6.12.0](https://github.com/maltzsama/lang-sql/compare/v6.11.0...v6.12.0) (2026-11-07)
 
 
