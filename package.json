@@ -28,6 +28,10 @@
   "module": "dist/index.js",
   "sideEffects": false,
   "license": "MIT",
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "dependencies": {
     "@codemirror/autocomplete": "^6.0.0",
     "@codemirror/language": "^6.0.0",
@@ -42,6 +46,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://code.haverbeke.berlin/codemirror/lang-sql.git"
+    "url": "git+https://github.com/maltzsama/lang-sql.git"
+  },
+  "homepage": "https://github.com/maltzsama/lang-sql#readme",
+  "bugs": {
+    "url": "https://github.com/maltzsama/lang-sql/issues"
   }
 }

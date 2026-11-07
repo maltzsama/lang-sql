@@ -1,6 +1,7 @@
 /node_modules
 package-lock.json
 /dist
+*.tgz
 /test/*.js
 /test/*.d.ts
 /test/*.d.ts.map

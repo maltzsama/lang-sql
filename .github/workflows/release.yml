@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test
+      - name: Check generated dialect data is current
+        run: |
+          npm run generate-dialects
+          git diff --exit-code -- src/dialects.ts
+      - name: Pack
+        run: npm pack
+      - name: Smoke-test the packed tarball
+        run: |
+          set -eu
+          work="$(mktemp -d)"
+          cd "$work"
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund "$GITHUB_WORKSPACE"/*.tgz
+          cat > smoke.mjs <<'EOF'
+          import {BigQuery, Snowflake, Trino, keywordCompletionSource} from "@codemirror/lang-sql"
+          for (let dialect of [BigQuery, Snowflake, Trino])
+            if (!dialect || Object.keys(dialect.dialect.words).length < 500)
+              throw new Error("dialect data missing from package")
+          if (typeof keywordCompletionSource(BigQuery) != "function")
+            throw new Error("completion source missing from package")
+          console.log("package smoke test passed")
+          EOF
+          node smoke.mjs
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*.tgz"
+          generate_release_notes: true
