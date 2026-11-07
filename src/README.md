@@ -54,6 +54,14 @@ JavaScript port of SQLGlot. To change them, edit
 then commit the updated `src/dialects.ts`. See [NOTICE](NOTICE) for the
 copyright notices of the upstream projects this data comes from.
 
+## Releases
+
+Releases are managed by [release-please](https://github.com/googleapis/release-please)
+from [Conventional Commits](https://www.conventionalcommits.org/). It opens a
+release pull request on `main`; merging that pull request bumps the version,
+updates `CHANGELOG.md`, creates the tag and GitHub Release, and attaches the
+packed tarball.
+
 ## API Reference
 
 @sql
