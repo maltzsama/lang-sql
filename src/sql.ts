@@ -1,10 +1,11 @@
 import {continuedIndent, indentNodeProp, foldNodeProp, LRLanguage, LanguageSupport} from "@codemirror/language"
-import {Extension} from "@codemirror/state"
-import {Completion, CompletionSource} from "@codemirror/autocomplete"
+import type {Extension} from "@codemirror/state"
+import type {Completion, CompletionSource} from "@codemirror/autocomplete"
 import {styleTags, tags as t} from "@lezer/highlight"
-import {ParserConfig} from "@lezer/lr"
+import type {ParserConfig} from "@lezer/lr"
 import {parser as baseParser} from "./sql.grammar"
-import {tokens, Dialect, tokensFor, SQLKeywords, SQLTypes, dialect} from "./tokens"
+import {tokens, tokensFor, SQLKeywords, SQLTypes, dialect} from "./tokens"
+import type {Dialect} from "./tokens"
 import {completeFromSchema, completeKeywords} from "./complete"
 import {
   athenaSpec, bigquerySpec, clickhouseSpec, databricksSpec, dorisSpec, dremioSpec, drillSpec,
@@ -108,16 +109,16 @@ export class SQLDialect {
   ) {}
 
   /// Returns the language for this dialect as an extension.
-  get extension() { return this.language.extension }
+  get extension(): Extension { return this.language.extension }
 
   /// Reconfigure the parser used by this dialect. Returns a new
   /// dialect object.
-  configureLanguage(options: ParserConfig, name?: string) {
+  configureLanguage(options: ParserConfig, name?: string): SQLDialect {
     return new SQLDialect(this.dialect, this.language.configure(options, name), this.spec)
   }
 
   /// Define a new dialect.
-  static define(spec: SQLDialectSpec) {
+  static define(spec: SQLDialectSpec): SQLDialect {
     let d = dialect(spec, spec.keywords, spec.types, spec.builtin)
     let language = LRLanguage.define({
       name: "sql",
@@ -167,7 +168,7 @@ export interface SQLConfig {
   keywordCompletion?: (label: string, type: string) => Completion
 }
 
-function defaultKeyword(label: string, type: string) { return {label, type, boost: -1} }
+function defaultKeyword(label: string, type: string): Completion { return {label, type, boost: -1} }
 
 /// Returns a completion source that provides keyword completion for
 /// the given SQL dialect.
@@ -194,7 +195,7 @@ function schemaCompletion(config: SQLConfig): Extension {
 /// SQL language support for the given SQL dialect, with keyword
 /// completion, and, if provided, schema-based completion as extra
 /// extensions.
-export function sql(config: SQLConfig = {}) {
+export function sql(config: SQLConfig = {}): LanguageSupport {
   let lang = config.dialect || StandardSQL
   return new LanguageSupport(lang.language, [
     schemaCompletion(config),

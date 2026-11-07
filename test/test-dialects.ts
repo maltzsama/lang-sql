@@ -1,11 +1,13 @@
 import ist from "ist"
 import {EditorState} from "@codemirror/state"
-import {CompletionContext, CompletionSource} from "@codemirror/autocomplete"
+import {CompletionContext} from "@codemirror/autocomplete"
+import type {CompletionSource} from "@codemirror/autocomplete"
 import {
   Athena, BigQuery, ClickHouse, Databricks, Doris, Dremio, Drill, Druid, DuckDB, Dune,
   Exasol, Fabric, Hive, Materialize, Presto, Redshift, RisingWave, SingleStore, Snowflake,
   Solr, Spark, Spark2, StarRocks, Tableau, Teradata, Trino, MySQL, TSQL, MSSQL, Oracle, PLSQL,
-  SQLDialect, keywordCompletionSource
+  keywordCompletionSource,
+  type SQLDialect
 } from "@maltzsama/lang-sql"
 
 function keywordsOf(dialect: SQLDialect) {
@@ -15,7 +17,8 @@ function keywordsOf(dialect: SQLDialect) {
   })
   let source = state.languageDataAt<CompletionSource>("autocomplete", 0)[0]
   let result = source(new CompletionContext(state, 0, true))
-  return new Set(result ? result.options.map(o => o.label) : [])
+  if (!result || result instanceof Promise) return new Set<string>()
+  return new Set(result.options.map(o => o.label))
 }
 
 // A keyword that is specific to each dialect's vocabulary.
