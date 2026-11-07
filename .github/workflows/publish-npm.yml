@@ -1,0 +1,45 @@
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Version to publish (defaults to the current package.json)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - name: Check npm token
+        run: test -n "$NODE_AUTH_TOKEN" || { echo "::error::The SQL_LANG repository secret is not set"; exit 1; }
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SQL_LANG }}
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test
+      - name: Check generated dialect data is current
+        run: |
+          npm run generate-dialects
+          git diff --exit-code -- src/dialects.ts
+      - name: Publish
+        run: |
+          tag="${{ inputs.tag }}"
+          if [ -n "$tag" ]; then
+            npm version "$tag" --no-git-tag-version
+          fi
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SQL_LANG }}
