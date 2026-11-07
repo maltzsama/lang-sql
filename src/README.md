@@ -2,6 +2,8 @@
 
 # @codemirror/lang-sql [![NPM version](https://img.shields.io/npm/v/@codemirror/lang-sql.svg)](https://www.npmjs.org/package/@codemirror/lang-sql)
 
+[![CI](https://github.com/maltzsama/lang-sql/actions/workflows/ci.yml/badge.svg)](https://github.com/maltzsama/lang-sql/actions/workflows/ci.yml)
+
 [ [**WEBSITE**](https://codemirror.net/) | [**ISSUES**](https://code.haverbeke.berlin/codemirror/dev/issues) | [**FORUM**](https://discuss.codemirror.net/c/next/) | [**CHANGELOG**](https://code.haverbeke.berlin/codemirror/lang-sql/src/branch/main/CHANGELOG.md) ]
 
 This package implements SQL language support for the

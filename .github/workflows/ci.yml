@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["20", "22"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test
+      - name: Check generated dialect data is current
+        run: |
+          npm run generate-dialects
+          git diff --exit-code -- src/dialects.ts
+      - name: Pack
+        if: matrix.node-version == '22'
+        run: npm pack
+      - name: Upload package
+        if: matrix.node-version == '22'
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: "*.tgz"
+          if-no-files-found: error
