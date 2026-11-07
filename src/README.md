@@ -7,7 +7,8 @@
 This is a fork of [`@codemirror/lang-sql`](https://code.haverbeke.berlin/codemirror/lang-sql)
 by Marijn Haverbeke, extended with 30+ SQL dialects whose keyword data is
 generated from [sqlingo](https://github.com/huydo862003/sqlingo), a JavaScript
-port of [SQLGlot](https://github.com/tobymao/sqlglot).
+port of [SQLGlot](https://github.com/tobymao/sqlglot). See [NOTICE](NOTICE) for
+third-party attributions.
 
 [ [**WEBSITE**](https://codemirror.net/) | [**ISSUES**](https://github.com/maltzsama/lang-sql/issues) | [**FORUM**](https://discuss.codemirror.net/c/next/) | [**CHANGELOG**](https://github.com/maltzsama/lang-sql/blob/main/CHANGELOG.md) ]
 
@@ -50,7 +51,8 @@ The keyword, type, and builtin lists for the bundled dialects are
 generated from [sqlingo](https://github.com/huydo862003/sqlingo), a
 JavaScript port of SQLGlot. To change them, edit
 `scripts/generate-dialects.mjs` and run `npm run generate-dialects`,
-then commit the updated `src/dialects.ts`.
+then commit the updated `src/dialects.ts`. See [NOTICE](NOTICE) for the
+copyright notices of the upstream projects this data comes from.
 
 ## API Reference
 

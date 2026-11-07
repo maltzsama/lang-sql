@@ -30,7 +30,8 @@
   "license": "MIT",
   "files": [
     "dist",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "NOTICE"
   ],
   "dependencies": {
     "@codemirror/autocomplete": "^6.0.0",
