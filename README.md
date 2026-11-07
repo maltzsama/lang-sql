@@ -257,6 +257,146 @@ Server</a>.</p>
 
 <dd><p><a href="https://en.wikipedia.org/wiki/PL/SQL">PL/SQL</a> dialect.</p>
 </dd>
+<dt id="user-content-athena">
+  <code><strong><a href="#user-content-athena">Athena</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://aws.amazon.com/athena/">Amazon Athena</a>.</p>
+</dd>
+<dt id="user-content-bigquery">
+  <code><strong><a href="#user-content-bigquery">BigQuery</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://cloud.google.com/bigquery">BigQuery</a>.</p>
+</dd>
+<dt id="user-content-clickhouse">
+  <code><strong><a href="#user-content-clickhouse">ClickHouse</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://clickhouse.com/">ClickHouse</a>.</p>
+</dd>
+<dt id="user-content-databricks">
+  <code><strong><a href="#user-content-databricks">Databricks</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.databricks.com/">Databricks</a>.</p>
+</dd>
+<dt id="user-content-doris">
+  <code><strong><a href="#user-content-doris">Doris</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://doris.apache.org/">Apache Doris</a>.</p>
+</dd>
+<dt id="user-content-dremio">
+  <code><strong><a href="#user-content-dremio">Dremio</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.dremio.com/">Dremio</a>.</p>
+</dd>
+<dt id="user-content-drill">
+  <code><strong><a href="#user-content-drill">Drill</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://drill.apache.org/">Apache Drill</a>.</p>
+</dd>
+<dt id="user-content-druid">
+  <code><strong><a href="#user-content-druid">Druid</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://druid.apache.org/">Apache Druid</a>.</p>
+</dd>
+<dt id="user-content-duckdb">
+  <code><strong><a href="#user-content-duckdb">DuckDB</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://duckdb.org/">DuckDB</a>.</p>
+</dd>
+<dt id="user-content-dune">
+  <code><strong><a href="#user-content-dune">Dune</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://dune.com/">Dune</a>.</p>
+</dd>
+<dt id="user-content-exasol">
+  <code><strong><a href="#user-content-exasol">Exasol</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.exasol.com/">Exasol</a>.</p>
+</dd>
+<dt id="user-content-fabric">
+  <code><strong><a href="#user-content-fabric">Fabric</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.microsoft.com/microsoft-fabric">Microsoft Fabric</a>.</p>
+</dd>
+<dt id="user-content-hive">
+  <code><strong><a href="#user-content-hive">Hive</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://hive.apache.org/">Apache Hive</a>.</p>
+</dd>
+<dt id="user-content-materialize">
+  <code><strong><a href="#user-content-materialize">Materialize</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://materialize.com/">Materialize</a>.</p>
+</dd>
+<dt id="user-content-presto">
+  <code><strong><a href="#user-content-presto">Presto</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://prestodb.io/">Presto</a>.</p>
+</dd>
+<dt id="user-content-redshift">
+  <code><strong><a href="#user-content-redshift">Redshift</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://aws.amazon.com/redshift/">Amazon Redshift</a>.</p>
+</dd>
+<dt id="user-content-risingwave">
+  <code><strong><a href="#user-content-risingwave">RisingWave</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://risingwave.com/">RisingWave</a>.</p>
+</dd>
+<dt id="user-content-singlestore">
+  <code><strong><a href="#user-content-singlestore">SingleStore</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.singlestore.com/">SingleStore</a>.</p>
+</dd>
+<dt id="user-content-snowflake">
+  <code><strong><a href="#user-content-snowflake">Snowflake</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.snowflake.com/">Snowflake</a>.</p>
+</dd>
+<dt id="user-content-solr">
+  <code><strong><a href="#user-content-solr">Solr</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://solr.apache.org/">Apache Solr</a>.</p>
+</dd>
+<dt id="user-content-spark">
+  <code><strong><a href="#user-content-spark">Spark</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://spark.apache.org/">Apache Spark</a>.</p>
+</dd>
+<dt id="user-content-spark2">
+  <code><strong><a href="#user-content-spark2">Spark2</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://spark.apache.org/">Apache Spark 2</a>.</p>
+</dd>
+<dt id="user-content-starrocks">
+  <code><strong><a href="#user-content-starrocks">StarRocks</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.starrocks.io/">StarRocks</a>.</p>
+</dd>
+<dt id="user-content-tableau">
+  <code><strong><a href="#user-content-tableau">Tableau</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.tableau.com/">Tableau</a>.</p>
+</dd>
+<dt id="user-content-teradata">
+  <code><strong><a href="#user-content-teradata">Teradata</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://www.teradata.com/">Teradata</a>.</p>
+</dd>
+<dt id="user-content-trino">
+  <code><strong><a href="#user-content-trino">Trino</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Dialect for <a href="https://trino.io/">Trino</a>.</p>
+</dd>
+<dt id="user-content-oracle">
+  <code><strong><a href="#user-content-oracle">Oracle</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Alias for <a href="#user-content-plsql"><code>PLSQL</code></a>, using the name SQLGlot gives to the Oracle dialect.</p>
+</dd>
+<dt id="user-content-tsql">
+  <code><strong><a href="#user-content-tsql">TSQL</a></strong>: <a href="#user-content-sqldialect">SQLDialect</a></code></dt>
+
+<dd><p>Alias for <a href="#user-content-mssql"><code>MSSQL</code></a>, using the name SQLGlot gives to the SQL Server dialect.</p>
+</dd>
 <dt id="user-content-keywordcompletionsource">
   <code><strong><a href="#user-content-keywordcompletionsource">keywordCompletionSource</a></strong>(<a id="user-content-keywordcompletionsource^dialect" href="#user-content-keywordcompletionsource^dialect">dialect</a>: <a href="#user-content-sqldialect">SQLDialect</a>, <a id="user-content-keywordcompletionsource^uppercase" href="#user-content-keywordcompletionsource^uppercase">upperCase</a>&#8288;?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a> = false, <a id="user-content-keywordcompletionsource^build" href="#user-content-keywordcompletionsource^build">build</a>&#8288;?: fn(<a id="user-content-keywordcompletionsource^build^label" href="#user-content-keywordcompletionsource^build^label">label</a>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a id="user-content-keywordcompletionsource^build^type" href="#user-content-keywordcompletionsource^build^type">type</a>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>) → <a href="https://codemirror.net/docs/ref#autocomplete.Completion">Completion</a>) → <a href="https://codemirror.net/docs/ref#autocomplete.CompletionSource">CompletionSource</a></code></dt>
 
