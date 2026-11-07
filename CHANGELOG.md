@@ -17,6 +17,13 @@ This fork is published as `@maltzsama/lang-sql`. Import it with
 `import {sql} from "@maltzsama/lang-sql"`. See `NOTICE` for third-party
 attributions.
 
+## [6.12.0](https://github.com/maltzsama/lang-sql/compare/v6.11.0...v6.12.0) (2026-11-07)
+
+
+### Features
+
+* automate releases with release-please ([4784481](https://github.com/maltzsama/lang-sql/commit/4784481249436242ca0fe920980e5ad5010490f7))
+
 ## 6.10.0 (2025-09-16)
 
 ### New features
@@ -276,4 +283,3 @@ The package now also exports a CommonJS module.
 ### Breaking changes
 
 First numbered release.
-
