@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "lib": ["es6", "scripthost", "dom"],
+    "types": ["mocha"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "stripInternal": true,
+    "target": "es6",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@maltzsama/lang-sql": ["./src/sql.ts"]
+    }
+  },
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "dist", "test/**/*.d.ts", "test/**/*.js"]
+}

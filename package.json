@@ -5,6 +5,7 @@
   "scripts": {
     "test": "cm-runtests",
     "build": "cm-buildhelper src/sql.ts",
+    "typecheck": "tsc --noEmit",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "generate-dialects": "node scripts/generate-dialects.mjs"
@@ -43,7 +44,9 @@
   },
   "devDependencies": {
     "@codemirror/buildhelper": "^1.0.0",
-    "sqlingo": "0.12.4"
+    "@types/mocha": "^9.1.1",
+    "sqlingo": "0.12.4",
+    "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",

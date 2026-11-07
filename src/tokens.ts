@@ -1,4 +1,5 @@
-import {ExternalTokenizer, InputStream} from "@lezer/lr"
+import {ExternalTokenizer} from "@lezer/lr"
+import type {InputStream} from "@lezer/lr"
 import {whitespace, LineComment, BlockComment, String as StringToken, Number, Bits, Bytes, Bool, Null,
         ParenL, ParenR, BraceL, BraceR, BracketL, BracketR, Semi, Dot,
         Operator, Punctuation, SpecialVar, Identifier, QuotedIdentifier,
@@ -112,7 +113,7 @@ function readWordOrQuoted(input: InputStream) {
 }
 
 function readBits(input: InputStream, endQuote?: number) {
-  while ((input as any).next == Ch._0 || (input as any).next == Ch._1) input.advance()
+  while (input.next == Ch._0 || input.next == Ch._1) input.advance()
   if (endQuote && input.next == endQuote) input.advance()
 }
 
@@ -128,7 +129,7 @@ function readNumber(input: InputStream, sawDot: boolean) {
   }
   if (input.next == Ch.E || input.next == Ch.e) {
     input.advance()
-    if ((input as any).next == Ch.Plus || (input as any).next == Ch.Dash) input.advance()
+    if ((input.next as number) == Ch.Plus || (input.next as number) == Ch.Dash) input.advance()
     while (input.next >= Ch._0 && input.next <= Ch._9) input.advance()
   }
 }
@@ -201,7 +202,7 @@ export function dialect(spec: Partial<Dialect>, kws?: string, types?: string, bu
   return dialect
 }
 
-export function tokensFor(d: Dialect) {
+export function tokensFor(d: Dialect): ExternalTokenizer {
   return new ExternalTokenizer(input => {
     let {next} = input
     input.advance()
@@ -232,7 +233,7 @@ export function tokensFor(d: Dialect) {
         let cur: number = input.next
         if (input.next < 0) break
         input.advance()
-        if (cur == Ch.Star && (input as any).next == Ch.Slash) {
+        if (cur == Ch.Star && (input.next as number) == Ch.Slash) {
           depth--
           input.advance()
           if (!depth) break

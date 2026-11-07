@@ -1,9 +1,10 @@
-import {Completion, CompletionContext, CompletionSource, completeFromList, ifNotIn} from "@codemirror/autocomplete"
-import {EditorState, Text} from "@codemirror/state"
+import {completeFromList, ifNotIn} from "@codemirror/autocomplete"
+import type {Completion, CompletionContext, CompletionSource} from "@codemirror/autocomplete"
+import type {EditorState, Text} from "@codemirror/state"
 import {syntaxTree} from "@codemirror/language"
-import {SyntaxNode} from "@lezer/common"
+import type {SyntaxNode} from "@lezer/common"
 import {Type, Keyword} from "./sql.grammar.terms"
-import {type SQLDialect, SQLNamespace} from "./sql"
+import type {SQLDialect, SQLNamespace} from "./sql"
 
 function tokenBefore(tree: SyntaxNode) {
   let cursor = tree.cursor().moveTo(tree.from, -1)
@@ -93,7 +94,8 @@ function maybeQuoteCompletions(openingQuote: string, closingQuote: string, compl
 const Span = /^\w*$/, QuotedSpan = /^[`'"\[]?\w*[`'"\]]?$/
 
 function isSelfTag(namespace: SQLNamespace): namespace is {self: Completion, children: SQLNamespace} {
-  return (namespace as any).self && typeof (namespace as any).self.label == "string"
+  let self = (namespace as {self?: Completion}).self
+  return !!self && typeof self.label == "string"
 }
 
 class CompletionLevel {
