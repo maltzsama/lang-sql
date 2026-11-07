@@ -1,6 +1,6 @@
 {
   "name": "@maltzsama/lang-sql",
-  "version": "6.11.0",
+  "version": "6.12.0",
   "description": "SQL language support for the CodeMirror code editor, with 30+ SQL dialects",
   "scripts": {
     "test": "cm-runtests",
