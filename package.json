@@ -51,5 +51,8 @@
   "homepage": "https://github.com/maltzsama/lang-sql#readme",
   "bugs": {
     "url": "https://github.com/maltzsama/lang-sql/issues"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.1.4"
   }
 }
