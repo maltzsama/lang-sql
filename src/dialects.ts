@@ -4,6 +4,27 @@
 import {SQLKeywords, SQLTypes} from "./tokens"
 import type {SQLDialectSpec} from "./sql"
 
+// Keywords supported by every dialect. Per-dialect lists only carry the
+// entries that are not in this shared set.
+const SQLExtendedKeywords =
+  "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
+  "current_schema database explain filter format glob ilike index isnull keep kill load lock merge " +
+  "namespace notnull offset operator optimize over overwrite partition partitioned_by percent pivot " +
+  "pragma regexp rename replace returning rlike semi sequence settings show straight_join tablesample " +
+  "temp truncate uncache unpivot use vacuum volatile window xor "
+
+// Types supported by every dialect. Per-dialect lists only carry the
+// entries that are not in this shared set.
+const SQLExtendedTypes =
+  "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
+  "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
+  "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
+  "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
+  "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
+  "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
+  "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
+  "varbinary varchar2 variant vector "
+
 // Functions supported by every dialect. Per-dialect lists only carry the
 // functions that are not in this shared set.
 const SQLFunctions =
@@ -80,22 +101,10 @@ const SQLFunctions =
 
 /// Configuration for the Athena dialect.
 export const athenaSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "match_recognize merge minus namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pragma qualify refresh regexp rename replace returning rlike semi " +
-    "sequence serdeproperties settings show straight_join tablesample temp truncate uncache unload " +
-    "unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint hyperloglog inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 " +
-    "int8 int8multirange int8range ipaddress ipprefix json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range " +
-    "short str string struct tdigest text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz " +
-    "timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint " +
-    "uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file match_recognize minus qualify refresh serdeproperties unload ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "hyperloglog ipaddress ipprefix tdigest ",
   builtin: SQLFunctions + " " +
     "approx_top_sum date_sub get_bit predict transform ",
   identifierQuotes: "\"`",
@@ -105,22 +114,10 @@ export const athenaSpec: SQLDialectSpec = {
 
 /// Configuration for the BigQuery dialect.
 export const bigquerySpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_datetime current_schema database explain export file filter format glob ilike index isnull " +
-    "keep kill load lock merge model namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pragma qualify regexp rename replace returning rlike semi sequence " +
-    "settings show straight_join tablesample temp truncate uncache unpivot use vacuum volatile window " +
-    "xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea byteint bytes datemultirange " +
-    "daterange datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float64 " +
-    "float8 geography geometry hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange " +
-    "int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range " +
-    "record short str string struct text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz " +
-    "timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint " +
-    "uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "current_datetime export file model qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "byteint bytes float64 record ",
   builtin: SQLFunctions + " " +
     "approx_top_count approx_top_sum bit_and bit_count bit_or bit_xor contains_substr date_sub " +
     "edit_distance format_date format_datetime format_time format_timestamp from_hex generate_array " +
@@ -137,24 +134,12 @@ export const bigquerySpec: SQLDialectSpec = {
 
 /// Configuration for the ClickHouse dialect.
 export const clickhouseSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof attach auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database detach dictionary div exchange explain file filter final format glob ilike " +
-    "index isnull keep kill load lock merge namespace notnull offset operator optimize over overwrite " +
-    "partition partitioned_by percent pivot pragma prewhere qualify regexp rename replace returning " +
-    "rlike sample semi sequence settings show straight_join system tablesample temp truncate uncache " +
-    "unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "aggregatefunction bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea date32 " +
-    "datemultirange daterange datetime datetime64 dec decfloat decimal128 decimal256 decimal32 decimal64 " +
-    "enum enum16 enum8 fixed fixedstring float32 float4 float64 float8 geography geometry hugeint inet " +
-    "int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 int8multirange " +
-    "int8range ipv4 ipv6 json jsonb linestring list long longblob longtext longvarchar lowcardinality " +
-    "mediumblob mediumint mediumtext multilinestring multipolygon nested nothing nullable number " +
-    "nummultirange numrange nvarchar nvarchar2 point polygon range ring short simpleaggregatefunction " +
-    "str string struct text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz " +
-    "timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange tuple uhugeint uint " +
-    "uint128 uint16 uint256 uint32 uint64 uint8 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "attach detach dictionary div exchange file final prewhere qualify sample system ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "aggregatefunction date32 datetime64 enum16 enum8 fixedstring float32 float64 ipv4 ipv6 linestring " +
+    "lowcardinality multilinestring multipolygon nested nothing point polygon ring " +
+    "simpleaggregatefunction tuple uint16 uint32 uint64 uint8 ",
   builtin: SQLFunctions + " " +
     "arraycompact arrayconcat arraydistinct arrayexcept arraymax arraymin arrayreverse arrayslice " +
     "arraysum cityhash64 cosinedistance currentdatabase currentschemas date_format date_sub dateadd " +
@@ -172,22 +157,10 @@ export const clickhouseSpec: SQLDialectSpec = {
 
 /// Configuration for the Databricks dialect.
 export const databricksSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge minus namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify refresh regexp rename replace returning rlike semi sequence " +
-    "serdeproperties settings show straight_join stream tablesample temp truncate uncache unpivot use " +
-    "vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector void ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file minus qualify refresh serdeproperties stream ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "void ",
   builtin: SQLFunctions + " " +
     "aggregate approx_top_sum base64 bit_and bit_count bit_get bit_or bit_xor collect_list collect_set " +
     "curdate date_format date_sub dateadd element_at format_string from_unixtime from_utc_timestamp " +
@@ -203,25 +176,13 @@ export const databricksSpec: SQLDialectSpec = {
 
 /// Configuration for the Doris dialect.
 export const dorisSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
     "_armscii8 _ascii _big5 _binary _cp1250 _cp1251 _cp1256 _cp1257 _cp850 _cp852 _cp866 _cp932 _dec8 " +
     "_eucjpms _euckr _gb18030 _gb2312 _gbk _geostd8 _greek _hebrew _hp8 _keybcs2 _koi8r _koi8u _latin1 " +
     "_latin2 _latin5 _latin7 _macce _macroman _sjis _swe7 _tis620 _ucs2 _ujis _utf16 _utf16le _utf32 " +
-    "_utf8 _utf8mb3 _utf8mb4 analyze anti apply asof auto_increment autoincrement cache charset comment " +
-    "copy current_catalog current_schema database distinctrow div explain file filter force format glob " +
-    "ignore ilike index isnull keep kill load lock merge mod namespace notnull offset operator optimize " +
-    "over overwrite partition partitioned_by percent pivot pragma qualify regexp rename replace " +
-    "returning rlike semi separator sequence settings show straight_join tablesample temp truncate type " +
-    "uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range serial short signed str " +
-    "string struct text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz " +
-    "tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 " +
-    "uint256 unsigned uuid varbinary varchar2 variant vector ",
+    "_utf8 _utf8mb3 _utf8mb4 charset distinctrow div file force ignore mod qualify separator type ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "serial signed unsigned ",
   builtin: SQLFunctions + " " +
     "approx_top_sum bit_and bit_count bit_or bit_xor collect_set convert_tz curdate curtime date_format " +
     "date_sub from_unixtime get_bit l2_distance maketime months_add predict to_date transform version ",
@@ -235,21 +196,9 @@ export const dorisSpec: SQLDialectSpec = {
 
 /// Configuration for the Dremio dialect.
 export const dremioSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum array_generate_range bit_and bit_or date_format date_part date_sub datetype get_bit " +
     "predict regexp_matches repeatstr to_date transform ",
@@ -260,21 +209,9 @@ export const dremioSpec: SQLDialectSpec = {
 
 /// Configuration for the Drill dialect.
 export const drillSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum date_sub get_bit levenshtein_distance predict repeated_count to_timestamp transform ",
   identifierQuotes: "`",
@@ -284,21 +221,9 @@ export const drillSpec: SQLDialectSpec = {
 
 /// Configuration for the Druid dialect.
 export const druidSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum date_sub get_bit predict transform ",
   identifierQuotes: "\"",
@@ -307,23 +232,11 @@ export const druidSpec: SQLDialectSpec = {
 
 /// Configuration for the DuckDB dialect.
 export const duckdbSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof attach auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database detach div explain file filter force format glob ilike index install isnull " +
-    "keep kill load lock macro merge namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pivot_wider positional pragma qualify regexp rename replace reset " +
-    "returning rlike semi sequence settings show straight_join summarize tablesample temp truncate " +
-    "uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric bitstring blob bool bpchar byte bytea datemultirange daterange " +
-    "datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography " +
-    "geometry hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list logical long longblob longtext longvarchar mediumblob " +
-    "mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short signed " +
-    "str string struct text time_ns timestamp_ltz timestamp_ms timestamp_ns timestamp_ntz timestamp_s " +
-    "timestamp_us timestampltz timestampntz timestamptz timetz tinyblob tinyint tinytext tsmultirange " +
-    "tsrange tstzmultirange tstzrange ubigint uhugeint uint uint128 uint256 uinteger usmallint utinyint " +
-    "uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "attach detach div file force install macro pivot_wider positional qualify reset summarize ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "bitstring logical signed timestamp_ms timestamp_ns timestamp_s timestamp_us ubigint uinteger " +
+    "usmallint utinyint ",
   builtin: SQLFunctions + " " +
     "approx_top_sum array_reverse_sort bit_and bit_or bit_xor current_localtimestamp datetrunc editdist3 " +
     "epoch epoch_ms get_bit get_current_time jaro_winkler_similarity json_extract_path " +
@@ -340,22 +253,10 @@ export const duckdbSpec: SQLDialectSpec = {
 
 /// Configuration for the Dune dialect.
 export const duneSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "match_recognize merge namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pragma refresh regexp rename replace returning rlike semi sequence " +
-    "settings show straight_join tablesample temp truncate uncache unpivot use vacuum volatile window " +
-    "xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint hyperloglog inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 " +
-    "int8 int8multirange int8range ipaddress ipprefix json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range " +
-    "short str string struct tdigest text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz " +
-    "timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint " +
-    "uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file match_recognize refresh ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "hyperloglog ipaddress ipprefix tdigest ",
   builtin: SQLFunctions + " " +
     "approx_percentile approx_top_sum arbitrary bitwise_and bitwise_not bitwise_or bitwise_xor " +
     "cardinality date_format date_parse date_sub dow doy element_at from_hex from_unixtime from_utf8 " +
@@ -368,22 +269,9 @@ export const duneSpec: SQLDialectSpec = {
 
 /// Configuration for the Exasol dialect.
 export const exasolSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database endif explain file filter format glob ilike index isnull keep kill load " +
-    "lock merge namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify regexp regexp_like rename replace returning rlike semi separator " +
-    "sequence settings show straight_join systimestamp tablesample temp truncate uncache unpivot use " +
-    "vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "endif file qualify regexp_like separator systimestamp ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "add_days add_hours add_minutes add_seconds add_weeks add_years approx_top_sum " +
     "approximate_count_distinct bit_and bit_lshift bit_not bit_or bit_rshift bit_xor convert_tz curdate " +
@@ -396,22 +284,11 @@ export const exasolSpec: SQLDialectSpec = {
 
 /// Configuration for the Fabric dialect.
 export const fabricSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma print proc qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp top truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "datetime2 datetimeoffset dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 " +
-    "float8 geography geometry hugeint image inet int1 int128 int16 int2 int256 int32 int4 " +
-    "int4multirange int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext " +
-    "longvarchar mediumblob mediumint mediumtext money ntext nullable number nummultirange numrange " +
-    "nvarchar nvarchar2 range rowversion short smalldatetime smallmoney sql_variant str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 " +
-    "uniqueidentifier utinyint uuid varbinary varchar2 variant vector xml ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file print proc qualify top ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "datetime2 datetimeoffset image money ntext rowversion smalldatetime smallmoney sql_variant " +
+    "uniqueidentifier utinyint xml ",
   builtin: SQLFunctions + " " +
     "approx_top_sum atn2 count_big date_sub dateadd datediff_big datename datetimefromparts datetrunc " +
     "eomonth get_bit getdate hashbytes json_query json_value newid parsename predict replicate " +
@@ -422,22 +299,9 @@ export const fabricSpec: SQLDialectSpec = {
 
 /// Configuration for the Hive dialect.
 export const hiveSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge minus namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify refresh regexp rename replace returning rlike semi sequence " +
-    "serdeproperties settings show straight_join tablesample temp truncate uncache unpivot use vacuum " +
-    "volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file minus qualify refresh serdeproperties ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum base64 collect_list collect_set date_format date_sub from_unixtime get_bit " +
     "get_json_object predict to_date to_json transform unbase64 unix_timestamp ",
@@ -450,24 +314,11 @@ export const hiveSpec: SQLDialectSpec = {
 
 /// Configuration for the Materialize dialect.
 export const materializeSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify refresh regexp reindex rename replace reset returning rlike semi sequence " +
-    "settings show straight_join tablesample temp truncate type uncache unpivot use vacuum variadic " +
-    "volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric bigserial blob bool bpchar byte bytea cstring datemultirange " +
-    "daterange datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 " +
-    "geography geometry hstore hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange " +
-    "int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext money name nullable number nummultirange numrange nvarchar " +
-    "nvarchar2 oid point range regclass regcollation regconfig regdictionary regnamespace regoper " +
-    "regoperator regproc regprocedure regrole regtype serial short smallserial str string struct text " +
-    "time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob tinyint " +
-    "tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid varbinary " +
-    "varchar2 variant vector xml ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "file qualify refresh reindex reset type variadic ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "bigserial cstring hstore money name oid point regclass regcollation regconfig regdictionary " +
+    "regnamespace regoper regoperator regproc regprocedure regrole regtype serial smallserial xml ",
   builtin: SQLFunctions + " " +
     "approx_top_sum bit_and bit_or bit_xor date_sub get_bit json_extract_path levenshtein_less_equal " +
     "make_time make_timestamp now predict sha256 sha384 sha512 to_date to_timestamp transform version ",
@@ -479,25 +330,13 @@ export const materializeSpec: SQLDialectSpec = {
 
 /// Configuration for the MySQL dialect.
 export const mysqlSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
     "_armscii8 _ascii _big5 _binary _cp1250 _cp1251 _cp1256 _cp1257 _cp850 _cp852 _cp866 _cp932 _dec8 " +
     "_eucjpms _euckr _gb18030 _gb2312 _gbk _geostd8 _greek _hebrew _hp8 _keybcs2 _koi8r _koi8u _latin1 " +
     "_latin2 _latin5 _latin7 _macce _macroman _sjis _swe7 _tis620 _ucs2 _ujis _utf16 _utf16le _utf32 " +
-    "_utf8 _utf8mb3 _utf8mb4 analyze anti apply asof auto_increment autoincrement cache charset comment " +
-    "copy current_catalog current_schema database distinctrow div explain file filter force format glob " +
-    "ignore ilike index isnull keep kill load lock merge mod namespace notnull offset operator optimize " +
-    "over overwrite partition partitioned_by percent pivot pragma qualify regexp rename replace " +
-    "returning rlike semi separator sequence settings show straight_join tablesample temp truncate type " +
-    "uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range serial short signed str " +
-    "string struct text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz " +
-    "tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 " +
-    "uint256 unsigned uuid varbinary varchar2 variant vector ",
+    "_utf8 _utf8mb3 _utf8mb4 charset distinctrow div file force ignore mod qualify separator type ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "serial signed unsigned ",
   builtin: SQLFunctions + " " +
     "approx_top_sum bit_and bit_count bit_or bit_xor convert_tz curdate curtime date_format date_sub " +
     "from_unixtime get_bit maketime predict transform version ",
@@ -511,22 +350,10 @@ export const mysqlSpec: SQLDialectSpec = {
 
 /// Configuration for the Oracle dialect.
 export const oracleSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache columns comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "match_recognize merge minus namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pragma qualify regexp rename replace returning rlike sample semi " +
-    "sequence settings show straight_join systimestamp tablesample temp top truncate uncache unpivot use " +
-    "vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric binary_double binary_float blob bool bpchar byte bytea " +
-    "datemultirange daterange datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed " +
-    "float4 float8 geography geometry hugeint inet int1 int128 int16 int2 int256 int32 int4 " +
-    "int4multirange int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext " +
-    "longvarchar mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar " +
-    "nvarchar2 range short str string struct text time_ns timestamp_ltz timestamp_ntz timestampltz " +
-    "timestampntz timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange " +
-    "tstzrange uhugeint uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "columns div file match_recognize minus qualify sample systimestamp top ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "binary_double binary_float ",
   builtin: SQLFunctions + " " +
     "approx_top_sum date_sub get_bit l2_distance predict square to_date to_timestamp transform ",
   identifierQuotes: "\"",
@@ -535,24 +362,11 @@ export const oracleSpec: SQLDialectSpec = {
 
 /// Configuration for the Postgres dialect.
 export const postgresSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify refresh regexp reindex rename replace reset returning rlike semi sequence " +
-    "settings show straight_join tablesample temp truncate type uncache unpivot use vacuum variadic " +
-    "volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric bigserial blob bool bpchar byte bytea cstring datemultirange " +
-    "daterange datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 " +
-    "geography geometry hstore hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange " +
-    "int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext money name nullable number nummultirange numrange nvarchar " +
-    "nvarchar2 oid point range regclass regcollation regconfig regdictionary regnamespace regoper " +
-    "regoperator regproc regprocedure regrole regtype serial short smallserial str string struct text " +
-    "time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob tinyint " +
-    "tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid varbinary " +
-    "varchar2 variant vector xml ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "file qualify refresh reindex reset type variadic ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "bigserial cstring hstore money name oid point regclass regcollation regconfig regdictionary " +
+    "regnamespace regoper regoperator regproc regprocedure regrole regtype serial smallserial xml ",
   builtin: SQLFunctions + " " +
     "approx_top_sum bit_and bit_or bit_xor date_sub get_bit json_extract_path levenshtein_less_equal " +
     "make_time make_timestamp now predict sha256 sha384 sha512 to_date to_timestamp transform version ",
@@ -564,21 +378,10 @@ export const postgresSpec: SQLDialectSpec = {
 
 /// Configuration for the Presto dialect.
 export const prestoSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "match_recognize merge namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pragma regexp rename replace returning rlike semi sequence settings " +
-    "show straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint hyperloglog inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 " +
-    "int8 int8multirange int8range ipaddress ipprefix json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range " +
-    "short str string struct tdigest text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz " +
-    "timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint " +
-    "uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file match_recognize ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "hyperloglog ipaddress ipprefix tdigest ",
   builtin: SQLFunctions + " " +
     "approx_percentile approx_top_sum arbitrary bitwise_and bitwise_not bitwise_or bitwise_xor " +
     "cardinality date_format date_parse date_sub dow doy element_at from_hex from_unixtime from_utf8 " +
@@ -591,24 +394,12 @@ export const prestoSpec: SQLDialectSpec = {
 
 /// Configuration for the Redshift dialect.
 export const redshiftSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge minus namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify refresh regexp reindex rename replace reset returning rlike semi " +
-    "sequence settings show straight_join tablesample temp top truncate type uncache unload unpivot use " +
-    "vacuum variadic volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric bigserial blob bool bpchar byte bytea cstring datemultirange " +
-    "daterange datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 " +
-    "geography geometry hllsketch hstore hugeint inet int1 int128 int16 int2 int256 int32 int4 " +
-    "int4multirange int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext " +
-    "longvarchar mediumblob mediumint mediumtext money name nullable number nummultirange numrange " +
-    "nvarchar nvarchar2 oid point range regclass regcollation regconfig regdictionary regnamespace " +
-    "regoper regoperator regproc regprocedure regrole regtype serial short smallserial str string struct " +
-    "super text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz " +
-    "tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 " +
-    "uint256 uuid varbinary varbyte varchar2 variant vector xml ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "file minus qualify refresh reindex reset top type unload variadic ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "bigserial cstring hllsketch hstore money name oid point regclass regcollation regconfig " +
+    "regdictionary regnamespace regoper regoperator regproc regprocedure regrole regtype serial " +
+    "smallserial super varbyte xml ",
   builtin: SQLFunctions + " " +
     "approx_top_sum bit_and bit_or bit_xor date_sub dateadd getdate json_extract_path " +
     "levenshtein_less_equal listagg make_time make_timestamp now predict regexp_substr sha256 sha384 " +
@@ -622,24 +413,11 @@ export const redshiftSpec: SQLDialectSpec = {
 
 /// Configuration for the RisingWave dialect.
 export const risingwaveSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify refresh regexp reindex rename replace reset returning rlike semi sequence " +
-    "settings show sink source straight_join tablesample temp truncate type uncache unpivot use vacuum " +
-    "variadic volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric bigserial blob bool bpchar byte bytea cstring datemultirange " +
-    "daterange datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 " +
-    "geography geometry hstore hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange " +
-    "int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext money name nullable number nummultirange numrange nvarchar " +
-    "nvarchar2 oid point range regclass regcollation regconfig regdictionary regnamespace regoper " +
-    "regoperator regproc regprocedure regrole regtype serial short smallserial str string struct text " +
-    "time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob tinyint " +
-    "tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid varbinary " +
-    "varchar2 variant vector xml ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "file qualify refresh reindex reset sink source type variadic ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "bigserial cstring hstore money name oid point regclass regcollation regconfig regdictionary " +
+    "regnamespace regoper regoperator regproc regprocedure regrole regtype serial smallserial xml ",
   builtin: SQLFunctions + " " +
     "approx_top_sum bit_and bit_or bit_xor date_sub get_bit json_extract_path levenshtein_less_equal " +
     "make_time make_timestamp now predict sha256 sha384 sha512 to_date to_timestamp transform version ",
@@ -651,25 +429,14 @@ export const risingwaveSpec: SQLDialectSpec = {
 
 /// Configuration for the SingleStore dialect.
 export const singlestoreSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
     "_armscii8 _ascii _big5 _binary _cp1250 _cp1251 _cp1256 _cp1257 _cp850 _cp852 _cp866 _cp932 _dec8 " +
     "_eucjpms _euckr _gb18030 _gb2312 _gbk _geostd8 _greek _hebrew _hp8 _keybcs2 _koi8r _koi8u _latin1 " +
     "_latin2 _latin5 _latin7 _macce _macroman _sjis _swe7 _tis620 _ucs2 _ujis _utf16 _utf16le _utf32 " +
-    "_utf8 _utf8mb3 _utf8mb4 analyze anti apply asof auto_increment autoincrement cache charset comment " +
-    "copy current_catalog current_schema database distinctrow div explain file filter force format glob " +
-    "ignore ilike index isnull keep kill load lock merge mod namespace notnull offset operator optimize " +
-    "over overwrite partition partitioned_by percent pivot pragma qualify regexp rename replace " +
-    "returning rlike semi separator sequence settings show straight_join tablesample temp truncate type " +
-    "uncache unpivot use utc_date utc_time utc_timestamp vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar bson byte bytea datemultirange daterange " +
-    "datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography " +
-    "geographypoint geometry hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange " +
-    "int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range " +
-    "record serial short signed str string struct text time_ns timestamp_ltz timestamp_ntz timestampltz " +
-    "timestampntz timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange " +
-    "tstzrange uhugeint uint uint128 uint256 unsigned uuid varbinary varchar2 variant vector ",
+    "_utf8 _utf8mb3 _utf8mb4 charset distinctrow div file force ignore mod qualify separator type " +
+    "utc_date utc_time utc_timestamp ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "bson geographypoint record serial signed unsigned ",
   builtin: SQLFunctions + " " +
     "approx_percentile approx_top_sum bit_and bit_count bit_or bit_xor bson_extract_bigint " +
     "bson_extract_bson bson_extract_double bson_extract_string convert_tz curdate curtime date_format " +
@@ -688,23 +455,11 @@ export const singlestoreSpec: SQLDialectSpec = {
 
 /// Configuration for the Snowflake dialect.
 export const snowflakeSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain filter format glob ilike index integration isnull keep kill " +
-    "load lock match_condition match_recognize merge minus namespace notnull offset operator optimize " +
-    "over overwrite package partition partitioned_by percent pivot policy pool pragma put qualify regexp " +
-    "remove rename replace returning rlike rm rule sample semi sequence settings show stage " +
-    "straight_join streamlit tablesample tag temp top truncate uncache unpivot use vacuum volatile " +
-    "volume warehouse window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea byteint datemultirange daterange " +
-    "datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum file fixed float4 float8 " +
-    "geography geometry hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range " +
-    "int64 int8 int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob " +
-    "mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short " +
-    "sql_double sql_varchar str string struct text time_ns timestamp_ltz timestamp_ntz timestamp_tz " +
-    "timestampltz timestampntz timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange " +
-    "tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div integration match_condition match_recognize minus package policy pool put qualify remove rm " +
+    "rule sample stage streamlit tag top volume warehouse ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "byteint file sql_double sql_varchar timestamp_tz ",
   builtin: SQLFunctions + " " +
     "approx_percentile approx_top_sum array_construct array_flatten array_generate_range arrays_overlap " +
     "bit_and bit_and_agg bit_andagg bit_not bit_or bit_or_agg bit_oragg bit_shiftleft bit_shiftright " +
@@ -728,21 +483,9 @@ export const snowflakeSpec: SQLDialectSpec = {
 
 /// Configuration for the Solr dialect.
 export const solrSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum date_sub get_bit predict transform ",
   identifierQuotes: "`",
@@ -752,22 +495,9 @@ export const solrSpec: SQLDialectSpec = {
 
 /// Configuration for the Spark dialect.
 export const sparkSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge minus namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify refresh regexp rename replace returning rlike semi sequence " +
-    "serdeproperties settings show straight_join tablesample temp truncate uncache unpivot use vacuum " +
-    "volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file minus qualify refresh serdeproperties ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "aggregate approx_top_sum base64 bit_and bit_count bit_get bit_or bit_xor collect_list collect_set " +
     "curdate date_format date_sub dateadd element_at format_string from_unixtime from_utc_timestamp " +
@@ -783,22 +513,9 @@ export const sparkSpec: SQLDialectSpec = {
 
 /// Configuration for the Spark2 dialect.
 export const spark2Spec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge minus namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify refresh regexp rename replace returning rlike semi sequence " +
-    "serdeproperties settings show straight_join tablesample temp truncate uncache unpivot use vacuum " +
-    "volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file minus qualify refresh serdeproperties ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "aggregate approx_top_sum base64 collect_list collect_set date_format date_sub element_at " +
     "format_string from_unixtime from_utc_timestamp get_bit get_json_object map_from_arrays predict " +
@@ -813,21 +530,9 @@ export const spark2Spec: SQLDialectSpec = {
 
 /// Configuration for the SQLite dialect.
 export const sqliteSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof attach auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database detach div explain file filter format glob ilike index isnull keep kill " +
-    "load lock merge namespace notnull offset operator optimize over overwrite partition partitioned_by " +
-    "percent pivot pragma qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "attach detach div file qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum date_sub editdist3 get_bit predict sqlite_version strftime transform ",
   identifierQuotes: "\"[`",
@@ -837,25 +542,13 @@ export const sqliteSpec: SQLDialectSpec = {
 
 /// Configuration for the StarRocks dialect.
 export const starrocksSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
     "_armscii8 _ascii _big5 _binary _cp1250 _cp1251 _cp1256 _cp1257 _cp850 _cp852 _cp866 _cp932 _dec8 " +
     "_eucjpms _euckr _gb18030 _gb2312 _gbk _geostd8 _greek _hebrew _hp8 _keybcs2 _koi8r _koi8u _latin1 " +
     "_latin2 _latin5 _latin7 _macce _macroman _sjis _swe7 _tis620 _ucs2 _ujis _utf16 _utf16le _utf32 " +
-    "_utf8 _utf8mb3 _utf8mb4 analyze anti apply asof auto_increment autoincrement cache charset comment " +
-    "copy current_catalog current_schema database distinctrow div explain file filter force format glob " +
-    "ignore ilike index isnull keep kill load lock merge mod namespace notnull offset operator optimize " +
-    "over overwrite partition partitioned_by percent pivot pragma qualify regexp rename replace " +
-    "returning rlike semi separator sequence settings show straight_join tablesample temp truncate type " +
-    "uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb largeint list long longblob longtext longvarchar mediumblob " +
-    "mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range serial short " +
-    "signed str string struct text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz " +
-    "timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint " +
-    "uint uint128 uint256 unsigned uuid varbinary varchar2 variant vector ",
+    "_utf8 _utf8mb3 _utf8mb4 charset distinctrow div file force ignore mod qualify separator type ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "largeint serial signed unsigned ",
   builtin: SQLFunctions + " " +
     "approx_top_sum array_flatten bit_and bit_count bit_or bit_xor convert_tz curdate curtime " +
     "date_format date_sub from_unixtime get_bit maketime predict transform version ",
@@ -869,21 +562,9 @@ export const starrocksSpec: SQLDialectSpec = {
 
 /// Configuration for the Tableau dialect.
 export const tableauSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 uuid " +
-    "varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file qualify ",
+  types: SQLTypes + " " + SQLExtendedTypes,
   builtin: SQLFunctions + " " +
     "approx_top_sum countd date_sub find findnth get_bit predict transform ",
   identifierQuotes: "[",
@@ -894,22 +575,10 @@ export const tableauSpec: SQLDialectSpec = {
 
 /// Configuration for the Teradata dialect.
 export const teradataSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache collect comment copy current_catalog " +
-    "current_schema database del div eq explain file filter format ge glob gt help ilike index ins " +
-    "isnull keep kill le load lock locking lt merge minus mod namespace ne notnull offset operator " +
-    "optimize over overwrite partition partitioned_by percent pivot pragma qualify regexp rename replace " +
-    "returning rlike sample sel semi sequence settings show straight_join tablesample temp top truncate " +
-    "uncache unpivot upd use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea byteint datemultirange daterange " +
-    "datetime dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography " +
-    "geometry hugeint inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 int8 " +
-    "int8multirange int8range json jsonb list long longblob longtext longvarchar mediumblob mediumint " +
-    "mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range short st_geometry str " +
-    "string struct text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz " +
-    "tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 " +
-    "uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "collect del div eq file ge gt help ins le locking lt minus mod ne qualify sample sel top upd ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "byteint st_geometry ",
   builtin: SQLFunctions + " " +
     "approx_top_sum cardinality date_sub get_bit hashmd5 predict transform ",
   identifierQuotes: "\"",
@@ -918,22 +587,10 @@ export const teradataSpec: SQLDialectSpec = {
 
 /// Configuration for the Trino dialect.
 export const trinoSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "match_recognize merge namespace notnull offset operator optimize over overwrite partition " +
-    "partitioned_by percent pivot pragma refresh regexp rename replace returning rlike semi sequence " +
-    "settings show straight_join tablesample temp truncate uncache unpivot use vacuum volatile window " +
-    "xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 float8 geography geometry " +
-    "hugeint hyperloglog inet int1 int128 int16 int2 int256 int32 int4 int4multirange int4range int64 " +
-    "int8 int8multirange int8range ipaddress ipprefix json jsonb list long longblob longtext longvarchar " +
-    "mediumblob mediumint mediumtext nullable number nummultirange numrange nvarchar nvarchar2 range " +
-    "short str string struct tdigest text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz " +
-    "timestamptz timetz tinyblob tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint " +
-    "uint uint128 uint256 uuid varbinary varchar2 variant vector ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file match_recognize refresh ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "hyperloglog ipaddress ipprefix tdigest ",
   builtin: SQLFunctions + " " +
     "approx_percentile approx_top_sum arbitrary bitwise_and bitwise_not bitwise_or bitwise_xor " +
     "cardinality date_format date_parse date_sub dow doy element_at from_hex from_unixtime from_utf8 " +
@@ -946,22 +603,11 @@ export const trinoSpec: SQLDialectSpec = {
 
 /// Configuration for the TSQL dialect.
 export const tsqlSpec: SQLDialectSpec = {
-  keywords: SQLKeywords + " " +
-    "analyze anti apply asof auto_increment autoincrement cache comment copy current_catalog " +
-    "current_schema database div explain file filter format glob ilike index isnull keep kill load lock " +
-    "merge namespace notnull offset operator optimize over overwrite partition partitioned_by percent " +
-    "pivot pragma print proc qualify regexp rename replace returning rlike semi sequence settings show " +
-    "straight_join tablesample temp top truncate uncache unpivot use vacuum volatile window xor ",
-  types: SQLTypes + " " +
-    "bigdecimal bigint bignum bignumeric blob bool bpchar byte bytea datemultirange daterange datetime " +
-    "datetime2 datetimeoffset dec decfloat decimal128 decimal256 decimal32 decimal64 enum fixed float4 " +
-    "float8 geography geometry hugeint image inet int1 int128 int16 int2 int256 int32 int4 " +
-    "int4multirange int4range int64 int8 int8multirange int8range json jsonb list long longblob longtext " +
-    "longvarchar mediumblob mediumint mediumtext money ntext nullable number nummultirange numrange " +
-    "nvarchar nvarchar2 range rowversion short smalldatetime smallmoney sql_variant str string struct " +
-    "text time_ns timestamp_ltz timestamp_ntz timestampltz timestampntz timestamptz timetz tinyblob " +
-    "tinyint tinytext tsmultirange tsrange tstzmultirange tstzrange uhugeint uint uint128 uint256 " +
-    "uniqueidentifier uuid varbinary varchar2 variant vector xml ",
+  keywords: SQLKeywords + " " + SQLExtendedKeywords + " " +
+    "div file print proc qualify top ",
+  types: SQLTypes + " " + SQLExtendedTypes + " " +
+    "datetime2 datetimeoffset image money ntext rowversion smalldatetime smallmoney sql_variant " +
+    "uniqueidentifier xml ",
   builtin: SQLFunctions + " " +
     "approx_top_sum atn2 count_big date_sub dateadd datediff_big datename datetimefromparts datetrunc " +
     "eomonth get_bit getdate hashbytes json_query json_value newid parsename predict replicate " +
