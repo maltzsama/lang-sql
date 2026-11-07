@@ -6,7 +6,7 @@ import {
   Exasol, Fabric, Hive, Materialize, Presto, Redshift, RisingWave, SingleStore, Snowflake,
   Solr, Spark, Spark2, StarRocks, Tableau, Teradata, Trino, MySQL, TSQL, MSSQL, Oracle, PLSQL,
   SQLDialect, keywordCompletionSource
-} from "@codemirror/lang-sql"
+} from "@maltzsama/lang-sql"
 
 function keywordsOf(dialect: SQLDialect) {
   let state = EditorState.create({

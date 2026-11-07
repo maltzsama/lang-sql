@@ -1,5 +1,5 @@
 import ist from "ist"
-import {PostgreSQL, MySQL, PLSQL, SQLDialect, MSSQL} from "@codemirror/lang-sql"
+import {PostgreSQL, MySQL, PLSQL, SQLDialect, MSSQL} from "@maltzsama/lang-sql"
 
 const mysqlTokens = MySQL.language
 const postgresqlTokens = PostgreSQL.language

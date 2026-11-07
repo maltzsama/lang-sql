@@ -1,7 +1,7 @@
 {
-  "name": "@codemirror/lang-sql",
+  "name": "@maltzsama/lang-sql",
   "version": "6.11.0",
-  "description": "SQL language support for the CodeMirror code editor",
+  "description": "SQL language support for the CodeMirror code editor, with 30+ SQL dialects",
   "scripts": {
     "test": "cm-runtests",
     "build": "cm-buildhelper src/sql.ts",
@@ -11,12 +11,12 @@
   },
   "keywords": [
     "editor",
-    "code"
+    "code",
+    "sql"
   ],
   "author": {
-    "name": "Marijn Haverbeke",
-    "email": "marijn@haverbeke.berlin",
-    "url": "http://marijnhaverbeke.nl"
+    "name": "Demetrius Albuquerque",
+    "email": "demetrius.albuquerque@yahoo.com.br"
   },
   "type": "module",
   "main": "dist/index.cjs",

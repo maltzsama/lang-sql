@@ -36,7 +36,7 @@ jobs:
           npm init -y >/dev/null
           npm install --no-audit --no-fund "$GITHUB_WORKSPACE"/*.tgz
           cat > smoke.mjs <<'EOF'
-          import {BigQuery, Snowflake, Trino, keywordCompletionSource} from "@codemirror/lang-sql"
+          import {BigQuery, Snowflake, Trino, keywordCompletionSource} from "@maltzsama/lang-sql"
           for (let dialect of [BigQuery, Snowflake, Trino])
             if (!dialect || Object.keys(dialect.dialect.words).length < 500)
               throw new Error("dialect data missing from package")

@@ -1,13 +1,20 @@
 <!-- NOTE: README.md is generated from src/README.md -->
 
-# @codemirror/lang-sql [![NPM version](https://img.shields.io/npm/v/@codemirror/lang-sql.svg)](https://www.npmjs.org/package/@codemirror/lang-sql)
+# @maltzsama/lang-sql
 
 [![CI](https://github.com/maltzsama/lang-sql/actions/workflows/ci.yml/badge.svg)](https://github.com/maltzsama/lang-sql/actions/workflows/ci.yml)
 
-[ [**WEBSITE**](https://codemirror.net/) | [**ISSUES**](https://code.haverbeke.berlin/codemirror/dev/issues) | [**FORUM**](https://discuss.codemirror.net/) | [**CHANGELOG**](https://code.haverbeke.berlin/codemirror/lang-sql/src/branch/main/CHANGELOG.md) ]
+This is a fork of [`@codemirror/lang-sql`](https://code.haverbeke.berlin/codemirror/lang-sql)
+by Marijn Haverbeke, extended with 30+ SQL dialects whose keyword data is
+generated from [sqlingo](https://github.com/huydo862003/sqlingo), a JavaScript
+port of [SQLGlot](https://github.com/tobymao/sqlglot).
+
+[ [**WEBSITE**](https://codemirror.net/) | [**ISSUES**](https://github.com/maltzsama/lang-sql/issues) | [**FORUM**](https://discuss.codemirror.net/c/next/) | [**CHANGELOG**](https://github.com/maltzsama/lang-sql/blob/main/CHANGELOG.md) ]
 
 This package implements SQL language support for the
-[CodeMirror](https://codemirror.net/) code editor.
+[CodeMirror](https://codemirror.net/) code editor, with built-in
+dialects for PostgreSQL, MySQL, SQLite, SQL Server, Oracle, BigQuery,
+Snowflake, ClickHouse, DuckDB, Trino, Spark, and many others.
 
 The [project page](https://codemirror.net/) has more information, a
 number of [examples](https://codemirror.net/examples/) and the
@@ -25,7 +32,7 @@ to communication around the project.
 
 ```javascript
 import {EditorView, basicSetup} from "codemirror"
-import {sql} from "@codemirror/lang-sql"
+import {sql} from "@maltzsama/lang-sql"
 
 const view = new EditorView({
   parent: document.body,
